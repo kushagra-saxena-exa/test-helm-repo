@@ -13,7 +13,7 @@ spec:
         requeueAfterSeconds: 300
   template:
     metadata:
-      name: 'nginx-sample-{{Values.customerSubCode}}'
+      name: 'nginx-sample-{{ subcode }}'
     spec:
       project: default
       source:
@@ -21,9 +21,9 @@ spec:
         repoURL: https://kushagra-saxena-exa.github.io/test-helm-repo
         targetRevision: 0.1.0
         helm:
-          releaseName: hello-world-{{subcode}}
+          releaseName: hello-world-{{ subcode }}
           values: |
-            customerSubCode: {{subcode}}
+            customerSubCode: {{ subcode }}
           skipCrds: false
       destination:
         name: in-cluster
