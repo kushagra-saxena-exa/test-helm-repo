@@ -9,16 +9,16 @@ spec:
     - plugin:
         # Specify the configMap where the plugin configuration is located.
         configMapRef:
-          name: simple-logstash-cm
-        requeueAfterSeconds: 10
+          name: simple-nginx-cm
+        requeueAfterSeconds: 300
   template:
     metadata:
       name: 'nginx-sample-{{Values.customerSubCode}}'
     spec:
       project: default
       source:
-        chart: hello-world
-        repoURL: https://github.com/helm/examples/
+        chart: test-helm-repo
+        repoURL: https://kushagra-saxena-exa.github.io/test-helm-repo
         targetRevision: 0.1.0
         helm:
           releaseName: hello-world-{{subcode}}
