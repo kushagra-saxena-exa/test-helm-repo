@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  sample-lighweight:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-09-03T15:55:32.685797+05:30"
+    description: A Helm chart for Kubernetes
+    digest: 4218f301e315f524de7815b6df73386d0f755c25a58ef557161826e362f1e1d2
+    name: sample-lighweight
+    type: application
+    urls:
+    - https://kushagra-saxena-exa.github.io/test-helm-repo/sample-lighweight-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-09-03T15:55:32.68394+05:30"
