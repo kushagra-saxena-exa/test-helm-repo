@@ -33,7 +33,7 @@ func startServer() {
 	tenantList = append(tenantList, types.Param{SubCode: "subcode4"})
 
 	router := mux.NewRouter()
-	router.HandleFunc("/api/v1/getparams.execute", pluginHandler)
+	router.HandleFunc("/api/v1/getparams.execute", pluginHandler).Methods("POST")
 	router.HandleFunc("/api/v1/tenants", tenantListHandler)
 	log.Info("Starting Argo plugin server on port 8000")
 	http.ListenAndServe(":8000", router)
