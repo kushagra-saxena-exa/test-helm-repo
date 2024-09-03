@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: simple-nginx-server
+spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+  generators:
+    - plugin:
+        # Specify the configMap where the plugin configuration is located.
+        configMapRef:
+          name: simple-logstash-cm
+        requeueAfterSeconds: 10
+  template:
+    metadata:
+      name: 'nginx-sample-{{Values.customerSubCode}}'
+    spec:
+      project: default
+      source:
+        chart: hello-world
+        repoURL: https://github.com/helm/examples/
+        targetRevision: 0.1.0
+        helm:
+          releaseName: hello-world-{{subcode}}
+          values: |
+            customerSubCode: {{subcode}}
+          skipCrds: false
+      destination:
+        name: in-cluster
+        namespace: test
+      syncPolicy:
+        syncOptions:
+          - Validate=true
+          - PrunePropagationPolicy=foreground
+          - PruneLast=true
+        retry:
+          limit: 5
+          backoff:
+            duration: 30s
+            factor: 2
+            maxDuration: 1h
+      ignoreDifferences:
+        - group: autoscaling
+          kind: Deployment
+          jsonPointers:
+            - /spec/maxReplicas
+      revisionHistoryLimit: 10

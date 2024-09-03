@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plugingen-sample-server
+  labels:
+    app: plugingen-sample-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: plugingen-sample-server
+  template:
+    metadata:
+      name: plugingen-sample-server
+      labels:
+        app: plugingen-sample-server
+    spec:
+      containers:
+        - name: server
+          image: kushagrasaxenaexa/argo-plugin-gen-server:1.1
+          imagePullPolicy: IfNotPresent
+          args:
+            - sample-http-server
+
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: plugingen-sample-server-svc
+  labels:
+    app: plugingen-sample-server-svc
+spec:
+  selector:
+    app: plugingen-sample-server
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000
